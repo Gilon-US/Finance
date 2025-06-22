@@ -1,0 +1,27 @@
+.table {
+  background-color: #26ae1f;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tableHeader {
+  border: 1px solid #d1d5db;
+  background-color: #2162e5;  /* bg-gray-200 */
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.tableCell {
+  border: 1px solid #d1d5db;
+  padding: 0.5rem;
+}
+
+.button {
+  border: 1px solid #d1d5db;
+  padding: 0.25rem 0.75rem;   /* py-1 px-3 */
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #f7fafc;
+}

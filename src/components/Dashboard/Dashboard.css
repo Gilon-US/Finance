@@ -1,0 +1,23 @@
+.dashboardMainDiv{
+  min-height: 100%;
+  min-width: 100%;
+  width: 94vw;
+  background-color: red; /* Tailwind's bg-gray-100 #f7fafc */
+  padding: 16px;             /* Tailwind's p-4 = 1rem */
+  font-family: monospace;    /* Tailwind's font-mono */
+  display: flex;
+  flex-direction: column;
+}
+
+.mainContent {
+  border: .125rem solid #cbd5e0;
+  background-color: brown;
+  padding: 16px;
+  flex: 1;
+  margin-left: 16px;
+}
+
+.bottomDiv {
+  display: flex;
+  height: 27.8125rem;
+}

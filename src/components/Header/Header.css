@@ -1,0 +1,24 @@
+.headerMainDiv {
+  border-width: 2px;
+  border-color: #cbd5e0; /* Tailwind's border-gray-400 cbd5e0 */
+  background-color: blue; /* ffffff */
+  padding: 1rem;          /* Tailwind's p-4 = 16px */
+  margin-bottom: 1rem;    /* Tailwind's mb-4 = 16px */
+}
+
+.toggle {
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 1rem;       /* py-2 px-4 */
+  margin-right: 0.5rem;       /* mr-2 */
+  cursor: pointer;
+}
+
+/* Active toggle button */
+.activeToggle {
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  background-color: #1f2937;  /* bg-gray-800 */
+  color: #ffffff;
+}

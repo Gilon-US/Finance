@@ -1,0 +1,36 @@
+.sidebarMainDiv {
+  border: .125rem solid #cbd5e0;  /* border-gray-400 */
+  background-color: purple;  /* ffffff */
+  padding: 16px;
+  width: 256px;          
+  height: 25.625rem;
+  overflow-y: auto;     /* w-64 = 16rem */
+}
+
+.querySection {
+  border: .0625rem solid #d1d5db;  /* border-gray-300 */
+  padding: 12px;           /* p-3 = .75rem */
+  margin-bottom: 16px;
+}
+
+/* Individual query item */
+.queryItem {
+  border: .0625rem solid #e5e7eb;  /* border-gray-200 */
+  padding: 8px;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.queryItem:hover {
+  background-color: #f7fafc;  /* hover:bg-gray-100 */
+}
+
+.button {
+  border: .0625rem solid #d1d5db;
+  padding: 4px 12px;   /* py-1 px-3 */
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #f7fafc;
+}
