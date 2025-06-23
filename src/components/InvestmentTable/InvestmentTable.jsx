@@ -1,7 +1,26 @@
 import React from "react";
 import "./InvestmentTable.css";
+import { Button, styled } from "@mui/material";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-const InvestmentTable = ({ investments, viewMode, onUpload, onAccess }) => {
+const InvestmentTable = ({ investments, viewMode, onAccess }) => {
+
+    const handleDocumentUpload = (files, investmentId) => {
+    console.log("[Upload Doc] for investment:", investmentId); //TODO - send an HTTP request to the server
+    console.log("Files list:", files); //TODO - send an HTTP request to the server
+  };
+
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
+    height: 1,
+    overflow: "hidden",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    whiteSpace: "nowrap",
+    width: 1,
+  });
   return (
     <>
       <div>
@@ -27,50 +46,65 @@ const InvestmentTable = ({ investments, viewMode, onUpload, onAccess }) => {
         </thead>
         <tbody>
           {investments.length > 0 ? (
-            investments.map((inv) => (
-              <tr key={inv.id}>
+            investments.map((currentInvestment) => (
+              <tr key={currentInvestment.id}>
                 <td className="tableCell">
                   <div className="font-semibold">
-                    {inv.company || "[Company Name]"}
+                    {currentInvestment.company || "[Company Name]"}
                   </div>
                   <div className="text-xs text-gray-600">
-                    {inv.sector || "[Sector]"}
+                    {currentInvestment.sector || "[Sector]"}
                   </div>
                 </td>
-                <td className="tableCell">[{inv.investmentType || "TYPE"}]</td>
                 <td className="tableCell">
-                  ${inv.amount?.toLocaleString() || "[Amount]"}
+                  [{currentInvestment.investmentType || "TYPE"}]
                 </td>
-                <td className="tableCell">{inv.round || "[Round]"}</td>
-                <td className="tableCell">{inv.ownership || "[%]"}</td>
                 <td className="tableCell">
-                  ${inv.valuation?.toLocaleString() || "[Valuation]"}
+                  ${currentInvestment.amount?.toLocaleString() || "[Amount]"}
                 </td>
-                <td className="tableCell">{inv.date || "[Date]"}</td>
+                <td className="tableCell">
+                  {currentInvestment.round || "[Round]"}
+                </td>
+                <td className="tableCell">
+                  {currentInvestment.ownership || "[%]"}
+                </td>
+                <td className="tableCell">
+                  $
+                  {currentInvestment.valuation?.toLocaleString() ||
+                    "[Valuation]"}
+                </td>
+                <td className="tableCell">
+                  {currentInvestment.date || "[Date]"}
+                </td>
                 <td className="tableCell">
                   <button
                     className={`button text-xs`}
-                    onClick={() => onAccess?.(inv.id)}
+                    onClick={() => onAccess?.(currentInvestment.id)}
                   >
-                    [{inv.documents || 0} DOCS]
+                    [{currentInvestment.documents || 0} DOCS]
                   </button>
                 </td>
                 <td className="tableCell">
-                  <button
-                    className={`button text-xs`}
-                    onClick={() => onUpload?.(inv.id)}
+                  <Button
+                    component="label"
+                    role={undefined}
+                    variant="contained"
+                    tabIndex={-1}
+                    startIcon={<CloudUploadIcon />}
                   >
-                    [UPLOAD]
-                  </button>
+                    Upload files
+                    <VisuallyHiddenInput
+                      type="file"
+                      onChange={(event) => handleDocumentUpload(event.target.files, currentInvestment.id )}
+                      multiple
+                    />
+                  </Button>
                 </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td
-                colSpan="9"
-                className={`$'tableCell' text-center text-gray-500`}
-              >
+              <td colSpan="9" className={`tableCell text-center text-gray-500`}>
                 [NO {viewMode.toUpperCase()} INVESTMENTS FOUND]
               </td>
             </tr>

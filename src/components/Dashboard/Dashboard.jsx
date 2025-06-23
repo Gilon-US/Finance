@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
@@ -29,12 +30,12 @@ const Dashboard = () => {
     // Optional: filter or fetch investments by mode here
   };
 
-  const handleDocumentUpload = (id) => {
-    console.log("[Upload Doc] for investment:", id);
-  };
-
   const handleVaultAccess = (id) => {
     console.log("[Access Vault] for investment:", id);
+  };
+
+   const onQuerySelect = (query, type) => {
+    console.log("[Access Vault] for investment:", );
   };
 
   const handleQuerySelect = (query, type) => {
@@ -89,7 +90,6 @@ const Dashboard = () => {
           <InvestmentTable
             investments={filteredInvestments}
             viewMode={viewMode}
-            onUpload={handleDocumentUpload}
             onAccess={handleVaultAccess}
           />
           {filteredInvestments.length > 0 && (

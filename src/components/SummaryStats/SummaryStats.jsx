@@ -1,4 +1,5 @@
 import React from 'react';
+import './SummaryStats.css'
 
 const SummaryStats = ({ investments }) => {
   const totalInvested = investments.reduce((sum, inv) => sum + (inv.amount || 0), 0);
@@ -14,7 +15,7 @@ const SummaryStats = ({ investments }) => {
   ];
 
   return (
-    <div>
+    <div className='summaryStats'>
       {stats.map((stat, index) => (
         <div key={index} className="border border-gray-300 p-3">
           <div className="text-xs text-gray-500">[{stat.label}]</div>
