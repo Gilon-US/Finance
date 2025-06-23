@@ -4,10 +4,9 @@ import { Button, styled } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const InvestmentTable = ({ investments, viewMode, onAccess }) => {
-
-    const handleDocumentUpload = (files, investmentId) => {
-    console.log("[Upload Doc] for investment:", investmentId); //TODO - send an HTTP request to the server
-    console.log("Files list:", files); //TODO - send an HTTP request to the server
+  const handleDocumentUpload = (files, investmentId) => {
+    console.log("[Upload Doc] for investment:", investmentId);
+    console.log("Files list:", files);
   };
 
   const VisuallyHiddenInput = styled("input")({
@@ -21,81 +20,57 @@ const InvestmentTable = ({ investments, viewMode, onAccess }) => {
     whiteSpace: "nowrap",
     width: 1,
   });
+
   return (
     <>
-      <div>
-        <h2 className="text-lg font-bold">
-          [{viewMode.toUpperCase()} INVESTMENTS TABLE]
-        </h2>
-        <div className="text-sm">Showing {investments.length} investments</div>
+      <div className="tableHeader">
+        <h2 className="tableTitle">[{viewMode.toUpperCase()} INVESTMENTS TABLE]</h2>
+        <div className="tableMeta">Showing {investments.length} investments</div>
       </div>
 
-      <table className="table">
+      <table className="investmentTable">
         <thead>
           <tr>
-            <th className="tableHeader">COMPANY</th>
-            <th className="tableHeader">TYPE</th>
-            <th className="tableHeader">AMOUNT</th>
-            <th className="tableHeader">ROUND</th>
-            <th className="tableHeader">OWNERSHIP</th>
-            <th className="tableHeader">VALUATION</th>
-            <th className="tableHeader">DATE</th>
-            <th className="tableHeader">DOCS</th>
-            <th className="tableHeader">ACTIONS</th>
+            <th className="tableHeaderCell">COMPANY</th>
+            <th className="tableHeaderCell">TYPE</th>
+            <th className="tableHeaderCell">AMOUNT</th>
+            <th className="tableHeaderCell">ROUND</th>
+            <th className="tableHeaderCell">OWNERSHIP</th>
+            <th className="tableHeaderCell">VALUATION</th>
+            <th className="tableHeaderCell">DATE</th>
+            <th className="tableHeaderCell">DOCS</th>
+            <th className="tableHeaderCell">ACTIONS</th>
           </tr>
         </thead>
         <tbody>
           {investments.length > 0 ? (
-            investments.map((currentInvestment) => (
-              <tr key={currentInvestment.id}>
-                <td className="tableCell">
-                  <div className="font-semibold">
-                    {currentInvestment.company || "[Company Name]"}
-                  </div>
-                  <div className="text-xs text-gray-600">
-                    {currentInvestment.sector || "[Sector]"}
-                  </div>
+            investments.map((inv) => (
+              <tr key={inv.id}>
+                <td className="tableBodyCell">
+                  <div className="companyName">{inv.company || "[Company Name]"}</div>
+                  <div className="companySector">{inv.sector || "[Sector]"}</div>
                 </td>
-                <td className="tableCell">
-                  [{currentInvestment.investmentType || "TYPE"}]
-                </td>
-                <td className="tableCell">
-                  ${currentInvestment.amount?.toLocaleString() || "[Amount]"}
-                </td>
-                <td className="tableCell">
-                  {currentInvestment.round || "[Round]"}
-                </td>
-                <td className="tableCell">
-                  {currentInvestment.ownership || "[%]"}
-                </td>
-                <td className="tableCell">
-                  $
-                  {currentInvestment.valuation?.toLocaleString() ||
-                    "[Valuation]"}
-                </td>
-                <td className="tableCell">
-                  {currentInvestment.date || "[Date]"}
-                </td>
-                <td className="tableCell">
-                  <button
-                    className={`button text-xs`}
-                    onClick={() => onAccess?.(currentInvestment.id)}
-                  >
-                    [{currentInvestment.documents || 0} DOCS]
+                <td className="tableBodyCell">[{inv.investmentType || "TYPE"}]</td>
+                <td className="tableBodyCell">${inv.amount?.toLocaleString() || "[Amount]"}</td>
+                <td className="tableBodyCell">{inv.round || "[Round]"}</td>
+                <td className="tableBodyCell">{inv.ownership || "[%]"}</td>
+                <td className="tableBodyCell">${inv.valuation?.toLocaleString() || "[Valuation]"}</td>
+                <td className="tableBodyCell">{inv.date || "[Date]"}</td>
+                <td className="tableBodyCell">
+                  <button className="docButton" onClick={() => onAccess?.(inv.id)}>
+                    [{inv.documents || 0} DOCS]
                   </button>
                 </td>
-                <td className="tableCell">
+                <td className="tableBodyCell">
                   <Button
                     component="label"
-                    role={undefined}
                     variant="contained"
-                    tabIndex={-1}
                     startIcon={<CloudUploadIcon />}
                   >
                     Upload files
                     <VisuallyHiddenInput
                       type="file"
-                      onChange={(event) => handleDocumentUpload(event.target.files, currentInvestment.id )}
+                      onChange={(e) => handleDocumentUpload(e.target.files, inv.id)}
                       multiple
                     />
                   </Button>
@@ -104,7 +79,7 @@ const InvestmentTable = ({ investments, viewMode, onAccess }) => {
             ))
           ) : (
             <tr>
-              <td colSpan="9" className={`tableCell text-center text-gray-500`}>
+              <td colSpan="9" className="tableBodyCell tableEmpty">
                 [NO {viewMode.toUpperCase()} INVESTMENTS FOUND]
               </td>
             </tr>

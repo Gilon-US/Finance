@@ -4,22 +4,18 @@ import "./Header.css";
 const Header = ({ user, viewMode, onToggle }) => {
   return (
     <div className="headerMainDiv">
-      <div>
-        <div>
-          <h1 className="text-xl font-bold">[INVESTMENT PORTFOLIO HEADER]</h1>
-          <p className="text-sm text-gray-600">
-            User: {user?.name || "Unknown"}
-          </p>
-        </div>
-        <div>
+      <div className="headerContent">
+        <h1 className="headerTitle">[INVESTMENT PORTFOLIO HEADER]</h1>
+        <p className="headerUser">User: {user?.name || "Unknown"}</p>
+        <div className="toggleContainer">
           <button
-            className={viewMode === "current" ? "activeToggle" : "toggle"}
+            className={viewMode === "current" ? "activeToggleButton" : "toggleButton"}
             onClick={() => onToggle("current")}
           >
             [CURRENT]
           </button>
           <button
-            className={viewMode === "potential" ? "activeToggle" : "toggle"}
+            className={viewMode === "potential" ? "activeToggleButton" : "toggleButton"}
             onClick={() => onToggle("potential")}
           >
             [POTENTIAL]

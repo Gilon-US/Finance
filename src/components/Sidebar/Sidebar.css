@@ -1,36 +1,61 @@
 .sidebarMainDiv {
-  border: .125rem solid #cbd5e0;  /* border-gray-400 */
-  background-color: purple;  /* ffffff */
+  border: 2px solid #cbd5e0;
+  background-color: purple;
   padding: 16px;
-  width: 256px;          
-  height: 25.625rem;
-  overflow-y: auto;     /* w-64 = 16rem */
+  width: 256px;
+  height: 410px;
+  overflow-y: auto;
 }
 
 .querySection {
-  border: .0625rem solid #d1d5db;  /* border-gray-300 */
-  padding: 12px;           /* p-3 = .75rem */
+  border: 1px solid #d1d5db;
+  padding: 12px;
   margin-bottom: 16px;
 }
 
-/* Individual query item */
+.querySectionTitle {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.queryMeta {
+  font-size: 0.75rem;
+  color: #6b7280; /* Tailwind's gray-500 */
+  margin-bottom: 8px;
+}
+
 .queryItem {
-  border: .0625rem solid #e5e7eb;  /* border-gray-200 */
+  border: 1px solid #e5e7eb;
   padding: 8px;
   margin-bottom: 4px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .queryItem:hover {
-  background-color: #f7fafc;  /* hover:bg-gray-100 */
-}
-
-.button {
-  border: .0625rem solid #d1d5db;
-  padding: 4px 12px;   /* py-1 px-3 */
-  cursor: pointer;
-}
-
-.button:hover {
   background-color: #f7fafc;
+}
+
+.selectedQueryItem {
+  background-color: #e2e8f0; /* Similar to bg-gray-200 */
+}
+
+.addQueryButton {
+  font-size: 0.75rem;
+  padding: 4px 12px;
+  border: 1px solid #d1d5db;
+  cursor: pointer;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+.addQueryButton:hover {
+  background-color: #f7fafc;
+}
+
+.debugBox {
+  font-size: 0.75rem;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+  padding: 8px;
 }

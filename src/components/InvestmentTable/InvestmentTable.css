@@ -1,27 +1,57 @@
-.table {
-  background-color: #26ae1f;
-  border-collapse: collapse;
+.investmentTable {
   width: 100%;
+  border-collapse: collapse;
+  background-color: rgb(0, 128, 79);
 }
 
 .tableHeader {
+  margin-bottom: 0.5rem;
+}
+
+.tableTitle {
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+
+.tableMeta {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.tableHeaderCell {
   border: 1px solid #d1d5db;
-  background-color: #2162e5;  /* bg-gray-200 */
+  background-color: #e5e7eb;
   padding: 0.5rem;
   text-align: left;
 }
 
-.tableCell {
+.tableBodyCell {
   border: 1px solid #d1d5db;
   padding: 0.5rem;
 }
 
-.button {
+.companyName {
+  font-weight: 600;
+}
+
+.companySector {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.docButton {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
   border: 1px solid #d1d5db;
-  padding: 0.25rem 0.75rem;   /* py-1 px-3 */
+  background-color: transparent;
   cursor: pointer;
 }
 
-.button:hover {
+.docButton:hover {
   background-color: #f7fafc;
+}
+
+.tableEmpty {
+  text-align: center;
+  color: #9ca3af;
 }
