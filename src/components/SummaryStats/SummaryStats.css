@@ -3,14 +3,14 @@
   gap: 1rem;
   margin-top: 1rem;
   flex-wrap: wrap;
-  background-color: #d1d5db;
+  background-color: white;
 }
 
 .summaryCard {
   border: 1px solid #d1d5db;
   padding: 1rem;
   flex: 1 1 150px;
-  background-color: #d1d5db;
+  background-color: white;
 }
 
 .statLabel {

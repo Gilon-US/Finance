@@ -1,7 +1,7 @@
 .investmentTable {
   width: 100%;
   border-collapse: collapse;
-  background-color: rgb(0, 128, 79);
+  background-color: #cbd5e0;
 }
 
 .tableHeader {
@@ -28,6 +28,7 @@
 .tableBodyCell {
   border: 1px solid #d1d5db;
   padding: 0.5rem;
+  background-color: white;
 }
 
 .companyName {
@@ -45,6 +46,7 @@
   border: 1px solid #d1d5db;
   background-color: transparent;
   cursor: pointer;
+  color: black;
 }
 
 .docButton:hover {
