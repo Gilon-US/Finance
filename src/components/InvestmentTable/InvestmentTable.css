@@ -13,6 +13,11 @@
   font-weight: bold;
 }
 
+.MuiDialogTitle-root {
+    display: flex;
+    justify-content: center;
+}
+
 .tableMeta {
   font-size: 0.875rem;
   color: #4b5563;
@@ -39,7 +44,10 @@
   font-size: 0.75rem;
   color: #6b7280;
 }
-
+.MuiDialog-paper {
+  height: 700px;
+    width: 600px;
+}
 .docButton {
   font-size: 0.75rem;
   padding: 0.25rem 0.75rem;

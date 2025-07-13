@@ -45,15 +45,28 @@ const Register = () => {
         body: JSON.stringify(userInfo),
       });
 
-      const data = await res.json();
+      let data;
+      try {
+        data = await res.json();
+      } catch (jsonError) {
+        console.error("Could not parse JSON:", jsonError);
+        throw new Error("Invalid JSON response from server.");
+      }
+
+      if (!res.ok) {
+        console.error("Server returned an error:", res.status, data);
+        alert(data.message || "Registration failed.");
+        return;
+      }
+
       if (data.success) {
         localStorage.removeItem("oauthUser");
         navigate("/dashboard");
       } else {
-        alert("Registration failed.");
+        alert(data.message || "Registration failed.");
       }
     } catch (err) {
-      console.error(err);
+      console.error("Fetch failed or unknown error:", err);
       alert("An error occurred while registering.");
     } finally {
       setLoading(false);

@@ -1,9 +1,12 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./InvestmentTable.css";
 import { Button, styled } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
+import Docs from "../Docs/Docs";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from '@mui/material/IconButton';
 
 const InvestmentTable = ({ investments, viewMode }) => {
   const handleDocumentUpload = (files, investmentId) => {
@@ -24,11 +27,11 @@ const InvestmentTable = ({ investments, viewMode }) => {
     width: 1,
   });
 
-const handleClose = () => {
+  const handleClose = () => {
     setOpen(false);
   };
 
-const handleOpen = () => {
+  const handleOpen = () => {
     setOpen(true);
   };
 
@@ -85,11 +88,21 @@ const handleOpen = () => {
                   {/*<Button variant="outlined" onClick={handleClickOpen}>
                     Open simple dialog
                   </Button>*/}
-                  <Dialog onClose={handleClose} open={open}>
+                  <Dialog onClose={handleClose} open={open} className="hhhh" >
                     <DialogTitle>Set backup account</DialogTitle>
-                    <div>
-                      Hello
-                    </div>
+                    <IconButton
+                      aria-label="close"
+                      onClick={handleClose}
+                      sx={(theme) => ({
+                        position: "absolute",
+                        right: 8,
+                        top: 8,
+                        color: theme.palette.grey[500],
+                      })}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                    <Docs />
                   </Dialog>
                   <button className="docButton" onClick={() => handleOpen()}>
                     [{inv.documents || 0} DOCS]

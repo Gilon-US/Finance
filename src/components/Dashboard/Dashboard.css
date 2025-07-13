@@ -1,7 +1,7 @@
 .dashboardMainDiv{
-  min-height: 100%;
-  min-width: 100%;
-  width: 94vw;
+  min-height: 100vh;
+  min-width: 100vw;
+
   background-color: rgb(243 244 246); /* Tailwind's bg-gray-100 #f7fafc */
   padding: 16px;             /* Tailwind's p-4 = 1rem */
   font-family: monospace;    /* Tailwind's font-mono */
