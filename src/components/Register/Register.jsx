@@ -96,6 +96,14 @@ const Register = () => {
           placeholder="LinkedIn URL"
           required
         />
+        <input
+          type="text"
+          name="password"
+          value={userInfo.password}
+          onChange={handleChange}
+          placeholder="password"
+          required
+        />
         <button type="submit" disabled={loading}>
           {loading ? 'Registering...' : 'Register'}
         </button>
