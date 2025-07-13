@@ -1,26 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Register.css';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Register.css";
 
 const Register = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    linkedInUrl: ''
+    firstName: "",
+    lastName: "",
+    email: "",
+    linkedInUrl: "",
+    password: "",
   });
 
   useEffect(() => {
-    const rawUser = localStorage.getItem('oauthUser');
+    const rawUser = localStorage.getItem("oauthUser");
     if (rawUser) {
       const parsed = JSON.parse(rawUser);
       setUserInfo((prev) => ({
         ...prev,
-        firstName: parsed?.given_name || '',
-        lastName: parsed?.family_name || '',
-        email: parsed?.email || ''
+        firstName: parsed?.given_name || "",
+        lastName: parsed?.family_name || "",
+        email: parsed?.email || "",
       }));
     }
   }, []);
@@ -29,7 +30,7 @@ const Register = () => {
     const { name, value } = e.target;
     setUserInfo((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -39,21 +40,21 @@ const Register = () => {
 
     try {
       const res = await fetch(import.meta.env.VITE_API_REGISTER_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userInfo)
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userInfo),
       });
 
       const data = await res.json();
       if (data.success) {
-        localStorage.removeItem('oauthUser');
-        navigate('/dashboard');
+        localStorage.removeItem("oauthUser");
+        navigate("/dashboard");
       } else {
-        alert('Registration failed.');
+        alert("Registration failed.");
       }
     } catch (err) {
       console.error(err);
-      alert('An error occurred while registering.');
+      alert("An error occurred while registering.");
     } finally {
       setLoading(false);
     }
@@ -97,15 +98,15 @@ const Register = () => {
           required
         />
         <input
-          type="text"
+          type="password"
           name="password"
           value={userInfo.password}
           onChange={handleChange}
-          placeholder="password"
+          placeholder="Password"
           required
         />
         <button type="submit" disabled={loading}>
-          {loading ? 'Registering...' : 'Register'}
+          {loading ? "Registering..." : "Register"}
         </button>
       </form>
     </div>
