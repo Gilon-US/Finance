@@ -1,38 +1,13 @@
-import React, { useState } from "react";
+// src/components/InvestmentTable/InvestmentTable.jsx
+
+import React from "react";
 import "./InvestmentTable.css";
-import { Button, styled } from "@mui/material";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import DialogTitle from "@mui/material/DialogTitle";
-import Dialog from "@mui/material/Dialog";
-import Docs from "../Docs/Docs";
-import CloseIcon from "@mui/icons-material/Close";
-import IconButton from '@mui/material/IconButton';
+import InvestmentRow from "../InvestmentRow/InvestmentRow";
 
 const InvestmentTable = ({ investments, viewMode }) => {
   const handleDocumentUpload = (files, investmentId) => {
-    console.log("[Upload Doc] for investment:", investmentId);
-    console.log("Files list:", files);
-  };
-
-  const [open, setOpen] = useState(false);
-  const VisuallyHiddenInput = styled("input")({
-    clip: "rect(0 0 0 0)",
-    clipPath: "inset(50%)",
-    height: 1,
-    overflow: "hidden",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    whiteSpace: "nowrap",
-    width: 1,
-  });
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
+    console.log("[Upload Doc] for investment:", investmentId, files);
+    // TODO: wire this up to your upload API
   };
 
   return (
@@ -45,7 +20,6 @@ const InvestmentTable = ({ investments, viewMode }) => {
           Showing {investments.length} investments
         </div>
       </div>
-
       <table className="investmentTable">
         <thead>
           <tr>
@@ -63,68 +37,11 @@ const InvestmentTable = ({ investments, viewMode }) => {
         <tbody>
           {investments.length > 0 ? (
             investments.map((inv) => (
-              <tr key={inv.id}>
-                <td className="tableBodyCell">
-                  <div className="companyName">
-                    {inv.company || "[Company Name]"}
-                  </div>
-                  <div className="companySector">
-                    {inv.sector || "[Sector]"}
-                  </div>
-                </td>
-                <td className="tableBodyCell">
-                  [{inv.investmentType || "TYPE"}]
-                </td>
-                <td className="tableBodyCell">
-                  ${inv.amount?.toLocaleString() || "[Amount]"}
-                </td>
-                <td className="tableBodyCell">{inv.round || "[Round]"}</td>
-                <td className="tableBodyCell">{inv.ownership || "[%]"}</td>
-                <td className="tableBodyCell">
-                  ${inv.valuation?.toLocaleString() || "[Valuation]"}
-                </td>
-                <td className="tableBodyCell">{inv.date || "[Date]"}</td>
-                <td className="tableBodyCell">
-                  {/*<Button variant="outlined" onClick={handleClickOpen}>
-                    Open simple dialog
-                  </Button>*/}
-                  <Dialog onClose={handleClose} open={open} className="hhhh" >
-                    <DialogTitle>Set backup account</DialogTitle>
-                    <IconButton
-                      aria-label="close"
-                      onClick={handleClose}
-                      sx={(theme) => ({
-                        position: "absolute",
-                        right: 8,
-                        top: 8,
-                        color: theme.palette.grey[500],
-                      })}
-                    >
-                      <CloseIcon />
-                    </IconButton>
-                    <Docs />
-                  </Dialog>
-                  <button className="docButton" onClick={() => handleOpen()}>
-                    [{inv.documents || 0} DOCS]
-                  </button>
-                </td>
-                <td className="tableBodyCell">
-                  <Button
-                    component="label"
-                    variant="contained"
-                    startIcon={<CloudUploadIcon />}
-                  >
-                    Upload files
-                    <VisuallyHiddenInput
-                      type="file"
-                      onChange={(e) =>
-                        handleDocumentUpload(e.target.files, inv.id)
-                      }
-                      multiple
-                    />
-                  </Button>
-                </td>
-              </tr>
+              <InvestmentRow
+                key={inv.id}
+                investment={inv}
+                onDocumentUpload={(files) => handleDocumentUpload(files, inv.id)}
+              />
             ))
           ) : (
             <tr>
