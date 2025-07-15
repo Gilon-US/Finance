@@ -1,16 +1,18 @@
+// src/components/Landing/Landing.jsx
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import './Landing.css';
 
-// Helper to decode JWT
+// Helper to decode a JWT’s payload
 function decodeJwt(token) {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
   const jsonPayload = decodeURIComponent(
     atob(base64)
       .split('')
-      .map(c => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`)
+      .map((c) => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`)
       .join('')
   );
   return JSON.parse(jsonPayload);
@@ -18,57 +20,52 @@ function decodeJwt(token) {
 
 const Landing = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState(null); // "signup" or "login"
+  const [loading, setLoading] = useState(false);
 
   const handleSuccess = async (credentialResponse) => {
     const token = credentialResponse?.credential;
-    if (!token) {
-      alert('No token received from Google.');
-      return;
-    }
+    if (!token) return alert('No token received from Google.');
 
     const decoded = decodeJwt(token);
 
     if (mode === 'signup') {
-      const user = {
+      // For registration we need firstName, lastName, email, linkedInUrl, status="new"
+      const payload = {
+        status: 'new',
         firstName: decoded.given_name,
         lastName: decoded.family_name,
-        email: decoded.email
+        email: decoded.email,
+        linkedInUrl: ''
       };
-      localStorage.setItem('oauthUser', JSON.stringify(user));
-      navigate('/register');
+      localStorage.setItem('oauthUser', JSON.stringify(payload));
+      return navigate('/register');
     }
 
-    if (mode === 'login') {
-      setLoading(true);
-      try {
-        const res = await fetch(import.meta.env.VITE_API_LOGIN_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            user_email: decoded.email,
-            user_password: 'FromGoogleOAuth!',
-            user_first_name: decoded.given_name,
-            user_last_name: decoded.family_name,
-            linkedin_url: ''
-          })
-        });
-
-        const data = await res.json();
-
-        if (data.success) {
-          // You might want to store the investments here for the dashboard
-          navigate('/dashboard');
-        } else {
-          alert('Login failed.');
-        }
-      } catch (err) {
-        console.error('Login error:', err);
-        alert('Something went wrong during login.');
-      } finally {
-        setLoading(false);
+    // mode === 'login'
+    setLoading(true);
+    try {
+      // Only email and status are strictly required
+      const payload = {
+        status: 'exists',
+        email: decoded.email
+      };
+      const res = await fetch(import.meta.env.VITE_API_LOGIN_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.success) {
+        navigate('/dashboard');
+      } else {
+        alert(data.message || 'Login failed.');
       }
+    } catch (err) {
+      console.error('Login error:', err);
+      alert('Something went wrong during login.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -76,26 +73,28 @@ const Landing = () => {
     <div className="landingPage">
       <h1>Welcome to the Finance App</h1>
 
+      {/* Choose flow */}
       {mode === null && (
-        <div style={{ display: 'flex', gap: '1rem' }}>
+        <div className="modeButtons">
           <button onClick={() => setMode('signup')}>Sign Up with Google</button>
           <button onClick={() => setMode('login')}>Log In with Google</button>
         </div>
       )}
 
+      {/* Google button */}
       {mode !== null && !loading && (
-        <div style={{ marginTop: '1rem' }}>
+        <div className="googleButtonWrapper">
           <GoogleLogin
             onSuccess={handleSuccess}
             onError={() => alert('Google login failed')}
           />
-          <p style={{ marginTop: '0.5rem' }}>
-            <button onClick={() => setMode(null)}>← Back</button>
-          </p>
+          <button className="backButton" onClick={() => setMode(null)}>
+            ← Back
+          </button>
         </div>
       )}
 
-      {loading && <p>Loading...</p>}
+      {loading && <p>Loading…</p>}
     </div>
   );
 };

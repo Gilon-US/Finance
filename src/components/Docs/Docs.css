@@ -1,0 +1,50 @@
+/* Container with border and no horizontal scroll */
+.docsContainer {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;    /* hide any side-to-side overflow */
+}
+
+/* Header: icon + title */
+.docsHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+.docsHeaderIcon {
+  margin-right: 0.5rem;
+  color: #1976d2;
+}
+.docsTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* File list: vertical scroll only */
+.docsList {
+  max-height: 220px;
+  overflow-y: auto;      /* scroll vertically only */
+  overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+}
+.docsList .MuiListItem-root {
+  padding-left: 0;
+  transition: background-color 0.2s;
+}
+.docsList .MuiListItem-root:hover {
+  background-color: rgba(25, 118, 210, 0.08);
+}
+
+/* Footer: upload button left-aligned */
+.docsFooter {
+  margin-top: 1rem;
+  text-align: left;
+}
+.uploadButton {
+  text-transform: none;
+}

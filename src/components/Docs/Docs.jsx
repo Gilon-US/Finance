@@ -1,76 +1,73 @@
 import React, { useState } from "react";
+import "./Docs.css";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import { Button } from "@mui/material";
+import DescriptionIcon from "@mui/icons-material/Description";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import styled from "@emotion/styled";
 
-const Docs = () => {
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  width: 1,
+  overflow: "hidden",
+  position: "absolute",
+});
+
+export default function Docs() {
   const [files, setFiles] = useState([
-    { name: "Document 1.pdf", url: "https://example.com/doc1.pdf" },
-    { name: "Presentation.pptx", url: "https://example.com/presentation.pptx" },
-    { name: "Photo.jpg", url: "https://example.com/photo.jpg" },
+    { name: "Bill of Sale", url: "/bill-of-sale.pdf" }
   ]);
 
   const handleDocumentUpload = (fileList) => {
-    const uploadedFiles = Array.from(fileList).map((file) => ({
-      name: file.name,
-      url: URL.createObjectURL(file), // Creates a temporary local URL
+    const uploaded = Array.from(fileList).map(f => ({
+      name: f.name,
+      url: URL.createObjectURL(f),
     }));
-    ////////// add the request to nurit funtion to add that file
-
-    setFiles((prevFiles) => [...prevFiles, ...uploadedFiles]);
+    setFiles(prev => [...prev, ...uploaded]);
   };
 
-  const handleFileClick = (url) => {
-    window.open(url, "_blank");
-  };
-
-  /* const handleDocumentUpload = (files) => {
-        console.log("Files list:", files);
-      };*/
-
-  const VisuallyHiddenInput = styled("input")({
-    clip: "rect(0 0 0 0)",
-    clipPath: "inset(50%)",
-    height: 1,
-    overflow: "hidden",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    whiteSpace: "nowrap",
-    width: 1,
-  });
+  const handleFileClick = (url) => window.open(url, "_blank");
 
   return (
-    <div>
-      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-        {files.map((file, index) => (
+    <div className="docsContainer">
+      <div className="docsHeader">
+        <DescriptionIcon className="docsHeaderIcon"/>
+        <span className="docsTitle">Documents</span>
+      </div>
+      <List className="docsList">
+        {files.map((file, idx) => (
           <ListItem
             button
-            key={index}
+            key={idx}
             onClick={() => handleFileClick(file.url)}
           >
+            <ListItemIcon>
+              <DescriptionIcon color="action" />
+            </ListItemIcon>
             <ListItemText primary={file.name} />
           </ListItem>
         ))}
       </List>
-
-      <Button
-        component="label"
-        variant="contained"
-        startIcon={<CloudUploadIcon />}
-      >
-        Upload files
-        <VisuallyHiddenInput
-          type="file"
-          onChange={(e) => handleDocumentUpload(e.target.files)}
-          multiple
-        />
-      </Button>
+      <div className="docsFooter">
+        <Button
+          component="label"
+          variant="outlined"
+          startIcon={<CloudUploadIcon />}
+          className="uploadButton"
+        >
+          Upload Files
+          <VisuallyHiddenInput
+            type="file"
+            onChange={e => handleDocumentUpload(e.target.files)}
+            multiple
+          />
+        </Button>
+      </div>
     </div>
   );
-};
-
-export default Docs;
+}
