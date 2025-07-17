@@ -28,9 +28,7 @@ export default function InvestmentRow({ investment, onDocumentUpload }) {
       </td>
 
       <td className="tableBodyCell">{investment.investmentType}</td>
-      <td className="tableBodyCell">
-        ${investment.amount.toLocaleString()}
-      </td>
+      <td className="tableBodyCell">${investment.amount.toLocaleString()}</td>
       <td className="tableBodyCell">{investment.round}</td>
       <td className="tableBodyCell">{investment.ownership}</td>
       <td className="tableBodyCell">
