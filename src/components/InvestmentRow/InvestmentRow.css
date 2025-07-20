@@ -1,0 +1,38 @@
+/* Row container: border under each row */
+.investmentRow {
+  border-bottom: 1px solid #ddd;
+}
+/* No border on the very last row */
+.investmentRow:last-child {
+  border-bottom: none;
+}
+
+/* Zebra-striping and hover effect */
+.investmentRow:nth-child(even) {
+  background-color: #fafafa;
+}
+.investmentRow:hover {
+  background-color: #f5f5f5;
+}
+
+/* Company column text */
+.companyName {
+  font-weight: bold;
+}
+.companySector {
+  font-size: 0.9em;
+  color: #666;
+}
+
+/* Docs button styling */
+.docButton {
+  background: none;
+  border: none;
+  color: #1976d2;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+.docButton:hover {
+  color: #115293;
+}

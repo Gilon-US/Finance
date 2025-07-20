@@ -18,6 +18,11 @@
     justify-content: center;
 }
 
+.dialogTitle{
+    display: flex;
+    justify-content: space-between;
+}
+
 .tableMeta {
   font-size: 0.875rem;
   color: #4b5563;

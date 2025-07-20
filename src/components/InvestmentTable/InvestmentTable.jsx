@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./InvestmentTable.css";
-import { Button, styled } from "@mui/material";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import DialogTitle from "@mui/material/DialogTitle";
+import InvestmentRow from "../InvestmentRow/InvestmentRow";
+//import AddCompany from "../AddCompany/AddCompany";
 import Dialog from "@mui/material/Dialog";
-import Docs from "../Docs/Docs";
+import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/icons-material/Close";
-import IconButton from '@mui/material/IconButton';
+import { IconButton } from "@mui/material";
+import AddCompany from "../AddCompany/AddCompany";
 
 const InvestmentTable = ({ investments, viewMode }) => {
   const handleDocumentUpload = (files, investmentId) => {
@@ -34,7 +34,7 @@ const InvestmentTable = ({ investments, viewMode }) => {
   const handleOpen = () => {
     setOpen(true);
   };
-
+  const [open, setOpen] = useState();
   return (
     <>
       <div className="tableHeader">
@@ -63,68 +63,13 @@ const InvestmentTable = ({ investments, viewMode }) => {
         <tbody>
           {investments.length > 0 ? (
             investments.map((inv) => (
-              <tr key={inv.id}>
-                <td className="tableBodyCell">
-                  <div className="companyName">
-                    {inv.company || "[Company Name]"}
-                  </div>
-                  <div className="companySector">
-                    {inv.sector || "[Sector]"}
-                  </div>
-                </td>
-                <td className="tableBodyCell">
-                  [{inv.investmentType || "TYPE"}]
-                </td>
-                <td className="tableBodyCell">
-                  ${inv.amount?.toLocaleString() || "[Amount]"}
-                </td>
-                <td className="tableBodyCell">{inv.round || "[Round]"}</td>
-                <td className="tableBodyCell">{inv.ownership || "[%]"}</td>
-                <td className="tableBodyCell">
-                  ${inv.valuation?.toLocaleString() || "[Valuation]"}
-                </td>
-                <td className="tableBodyCell">{inv.date || "[Date]"}</td>
-                <td className="tableBodyCell">
-                  {/*<Button variant="outlined" onClick={handleClickOpen}>
-                    Open simple dialog
-                  </Button>*/}
-                  <Dialog onClose={handleClose} open={open} className="hhhh" >
-                    <DialogTitle>Set backup account</DialogTitle>
-                    <IconButton
-                      aria-label="close"
-                      onClick={handleClose}
-                      sx={(theme) => ({
-                        position: "absolute",
-                        right: 8,
-                        top: 8,
-                        color: theme.palette.grey[500],
-                      })}
-                    >
-                      <CloseIcon />
-                    </IconButton>
-                    <Docs />
-                  </Dialog>
-                  <button className="docButton" onClick={() => handleOpen()}>
-                    [{inv.documents || 0} DOCS]
-                  </button>
-                </td>
-                <td className="tableBodyCell">
-                  <Button
-                    component="label"
-                    variant="contained"
-                    startIcon={<CloudUploadIcon />}
-                  >
-                    Upload files
-                    <VisuallyHiddenInput
-                      type="file"
-                      onChange={(e) =>
-                        handleDocumentUpload(e.target.files, inv.id)
-                      }
-                      multiple
-                    />
-                  </Button>
-                </td>
-              </tr>
+              <InvestmentRow
+                key={inv.id}
+                investment={inv}
+                onDocumentUpload={(files) =>
+                  handleDocumentUpload(files, inv.id)
+                }
+              />
             ))
           ) : (
             <tr>
@@ -135,6 +80,25 @@ const InvestmentTable = ({ investments, viewMode }) => {
           )}
         </tbody>
       </table>
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle className="dialogTitle">
+          Add Company
+          <IconButton
+            className="closeButton"
+            size="small"
+            onClick={() => setOpen(false)}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <AddCompany />
+      </Dialog>
+      <button onClick={() => setOpen(true)}>Add Company</button>
     </>
   );
 };

@@ -1,59 +1,43 @@
-/* eslint-disable no-unused-vars */
+// src/components/Dashboard/Dashboard.jsx
+
 import React, { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import InvestmentTable from "../InvestmentTable/InvestmentTable";
 import SummaryStats from "../SummaryStats/SummaryStats";
-import "./Dashboard.css";
-import { mockInvestments } from "../../data/mockInvestments";
+import "../Dashboard/Dashboard.css";
 
 const Dashboard = () => {
   const [currentUser, setCurrentUser] = useState({ name: "John Investor" });
-  const [systemQueries, setSystemQueries] = useState([
-    "Ready for Exit",
-    "Needs Follow-up",
-  ]);
-  const [userQueries, setUserQueries] = useState([
-    "High Value",
-    "Tech Only",
-    "Recent",
-  ]);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [viewMode, setViewMode] = useState("current");
   const [selectedQuery, setSelectedQuery] = useState("");
+  const [investments, setInvestments] = useState([]);
   const [filteredInvestments, setFilteredInvestments] = useState([]);
-  const [investments, setInvestments] = useState(mockInvestments);
+  
 
-  const handleInvestmentToggle = (mode) => {
-    console.log("[Toggle]", mode);
-    // Optional: filter or fetch investments by mode here
-  };
-
-  const handleVaultAccess = (id) => {
-    console.log("[Access Vault] for investment:", id);
-  };
-
-   const onQuerySelect = (query, type) => {
-    console.log("[Access Vault] for investment:", );
-  };
-
-  const handleQuerySelect = (query, type) => {
-    console.log("[Query Selected]", query, `(type: ${type})`);
-  };
-
+  // Load user_id and investments array from the login response stored in localStorage
   useEffect(() => {
-    const filtered = investments.filter((inv) => inv.status === viewMode);
-    setFilteredInvestments(filtered);
-  }, [investments, viewMode]);
+    try {
+      const session = JSON.parse(localStorage.getItem("sessionData") || "{}");
+      if (session.user_id) {
+        setCurrentUser({ name: session.user_id });
+      }
+      if (Array.isArray(session.investments)) {
+        setInvestments(session.investments);
+      }
+    } catch (e) {
+      console.error("Failed to load sessionData:", e);
+      setError("Could not load investments");
+    }
+  }, []);
 
-  if (loading) {
-    return (
-      <div className="dashboardMainDiv">
-        <div className="p-8 text-center">LOADING...</div>
-      </div>
+  // Re-filter whenever the investments list or view mode changes
+  useEffect(() => {
+    setFilteredInvestments(
+      investments.filter((inv) => inv.status === viewMode)
     );
-  }
+  }, [investments, viewMode]);
 
   if (error) {
     return (
@@ -68,20 +52,12 @@ const Dashboard = () => {
       <Header
         user={currentUser}
         viewMode={viewMode}
-        onToggle={(mode) => {
-          setViewMode(mode);
-          handleInvestmentToggle?.(mode);
-        }}
+        onToggle={(mode) => setViewMode(mode)}
       />
       <div className="bottomDiv">
         <Sidebar
-          userQueries={userQueries}
-          systemQueries={systemQueries}
           selectedQuery={selectedQuery}
-          onSelect={(query, type) => {
-            setSelectedQuery(query);
-            onQuerySelect?.(query, type);
-          }}
+          onSelect={(query) => setSelectedQuery(query)}
           investments={investments}
           filteredInvestments={filteredInvestments}
           viewMode={viewMode}
@@ -90,7 +66,6 @@ const Dashboard = () => {
           <InvestmentTable
             investments={filteredInvestments}
             viewMode={viewMode}
-            onAccess={handleVaultAccess}
           />
           {filteredInvestments.length > 0 && (
             <SummaryStats investments={filteredInvestments} />
