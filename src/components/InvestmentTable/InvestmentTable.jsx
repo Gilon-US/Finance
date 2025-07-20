@@ -15,26 +15,7 @@ const InvestmentTable = ({ investments, viewMode }) => {
   };
 
   const [open, setOpen] = useState(false);
-  const VisuallyHiddenInput = styled("input")({
-    clip: "rect(0 0 0 0)",
-    clipPath: "inset(50%)",
-    height: 1,
-    overflow: "hidden",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    whiteSpace: "nowrap",
-    width: 1,
-  });
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const [open, setOpen] = useState();
   return (
     <>
       <div className="tableHeader">
