@@ -1,16 +1,13 @@
-.dashboardMainDiv{
-  min-height: 100vh;
-  min-width: 100vw;
-
+.dashboardMainDiv {
   background-color: rgb(243 244 246); /* Tailwind's bg-gray-100 #f7fafc */
-  padding: 16px;             /* Tailwind's p-4 = 1rem */
-  font-family: monospace;    /* Tailwind's font-mono */
+  padding: 16px; /* Tailwind's p-4 = 1rem */
+  font-family: monospace; /* Tailwind's font-mono */
   display: flex;
   flex-direction: column;
 }
 
 .mainContent {
-  border: .125rem solid gray;
+  border: 0.125rem solid gray;
   background-color: white;
   padding: 16px;
   flex: 1;
@@ -19,5 +16,5 @@
 
 .bottomDiv {
   display: flex;
-  height: 27.8125rem;
+  height: 66vh;
 }

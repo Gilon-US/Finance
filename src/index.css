@@ -26,19 +26,12 @@ a:hover {
 html {
   overflow: hidden !important;
 }
-/*
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}*/
+
 body {
   margin: 0;
   height: 100vh !important;
   width: 100vw;
-  background-color: pink;
+  background-color: rgb(243 244 246);
 }
 
 h1 {
