@@ -70,7 +70,7 @@ export default function Landing() {
 
   return (
     <div className="landingPage">
-      <h1>Welcome to the Finance App</h1>
+      <h1>Welcome to the Gilon App</h1>
 
       {mode === null && (
         <div className="modeButtons">
